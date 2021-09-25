@@ -1,0 +1,1 @@
+{"version":1,"defects":{"Test\\Hurah\\Event\\Helper\\EndpointTest::testDestruction":5,"Test\\Hurah\\Event\\DispatcherTest::testDispatch":5},"times":{"Test\\Hurah\\Event\\Helper\\EndpointTest::testDestruction":0.005,"Test\\Hurah\\Event\\DispatcherTest::testDispatch":0.008}}
