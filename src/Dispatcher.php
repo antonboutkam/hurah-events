@@ -2,9 +2,10 @@
 
 namespace Hurah\Event;
 
-use Hurah\Event\Helper\Endpoint;
-use Hurah\Event\Helper\EventDirectory;
+use Hurah\Event\Helper\DeliveryService;
+use Hurah\Event\Helper\FileStructureHelper;
 use Hurah\Types\Type\Path;
+use function var_dump;
 
 class Dispatcher
 {
@@ -16,19 +17,18 @@ class Dispatcher
 
     public function dispatch(EventType $eventType, Context $data)
     {
-        $fileStructure = new EventDirectory($this->eventRoot, $eventType);
+        $fileStructureHelper = new FileStructureHelper($this->eventRoot);
 
-        foreach($fileStructure->getListeners() as $listener)
+        foreach($fileStructureHelper->findEventListeners($eventType) as $listenedDirectoryPath)
         {
-            $this->deliver($listener, $data);
+            $this->deliver($listenedDirectoryPath, $data);
         }
     }
-    private function deliver(Path $listener, Context $data)
+    private function deliver(Path $oHandlerDirectory, Context $data)
     {
-        $oEndpoint = new Endpoint($listener);
-        $oEndpoint->inbox($data);
-
-        $listener->extend('inbox')->write($data);
+        var_dump($oHandlerDirectory);
+        $oEndpoint = new DeliveryService($oHandlerDirectory);
+        $oEndpoint->writeToInbox($data);
     }
 
 }

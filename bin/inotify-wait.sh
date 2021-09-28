@@ -1,18 +1,23 @@
 #!/bin/sh
 
-while getopts r:a:f: flag
-do
-    case "${flag}" in
-        r) ROOT_DIR=${OPTARG};;
-        a) age=${OPTARG};;
-        f) fullname=${OPTARG};;
-    esac
-done
+# Usage:
+# ./inotify-wait.sh <event-directory> <handler-name> <handler-fully-qualified-class-name>
+#
 
-echo "Starting listener"
 
-inotifywait -m "$ROOT_DIR/*/*/inbox -e create |
+echo "Starting listener in $1"
+DIRECTORY="$1/$2_listener/inbox"
+
+
+if [ ! -d "$DIRECTORY" ]; then
+  echo "Creating $DIRECTORY which will act as the event inbox"
+  mkdir -p "$DIRECTORY"
+fi
+
+inotifywait -m "$DIRECTORY" -e create |
     while read path action file; do
-        /usr/bin/php ./application.php exobrain:message:processor
+	       echo "$action - $path - $file"
+        /usr/bin/php ./application.php worker:runner $path $3
     done
+
 echo "Listener stopped"

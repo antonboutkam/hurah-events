@@ -30,7 +30,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\Hurah\\Event\\": "tests"
+            "Test\\Hurah\\Event\\": "test"
         }
     }
 }

@@ -4,6 +4,6 @@ namespace Hurah\Event;
 
 interface HandlerInterface
 {
-    public function handle(Context $context):void;
+    public function handle():void;
     public function getType():EventType;
 }
