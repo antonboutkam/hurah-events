@@ -43,6 +43,7 @@ class FileStructureHelper
         $oDeliveryPoints = $this->getDeliveryPoints($eventType);
         foreach ($oDeliveryPoints as $oDeliveryPoint)
         {
+            $oDeliveryPoint->makeDir();
             $oPathCollection->appendCollection($this->findListenersInPath($oDeliveryPoint));
         }
         return $oPathCollection;
