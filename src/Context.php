@@ -37,6 +37,10 @@ class Context
 
         return JsonUtils::encode($this->data);
     }
+    public function getSequence():int
+    {
+        return $this->sequence;
+    }
     public function setSequence(int $sequence)
     {
         $this->sequence = $sequence;

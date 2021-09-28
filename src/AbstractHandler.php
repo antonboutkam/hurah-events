@@ -7,6 +7,7 @@ use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Type\PathCollection;
 use Hurah\Types\Type\Regex;
+use Psr\Log\LoggerInterface;
 
 abstract class AbstractHandler implements HandlerInterface
 {
@@ -16,7 +17,6 @@ abstract class AbstractHandler implements HandlerInterface
     public function __construct(HandlerName $name, EventType $eventType, Path $eventRoot)
     {
         $this->inbox = $eventRoot->extend($eventType->asArray(), $name . '_listener', 'inbox')->makeDir();
-        $this->name = $name;
         $this->eventType = $eventType;
     }
 
@@ -32,9 +32,10 @@ abstract class AbstractHandler implements HandlerInterface
     {
         $oFilter = new Regex('/[0-9]+.json$/');
 
-        return TaskCollection::fromPathCollection($this->getInboxFiles()->filter($oFilter));
+        return TaskCollection::fromPathCollection($this->getInboxFiles()->filter($oFilter), $this->getLogger());
     }
 
+    abstract public function getLogger():LoggerInterface;
     abstract public function handle(): void;
 
     public function getType(): EventType

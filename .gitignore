@@ -1,1 +1,6 @@
 /vendor/
+/test/data/MockEventRoot/*.json
+/test/data/MockEventRoot/*/*.json
+/test/data/MockEventRoot/*/*/*.json
+/test/data/MockEventRoot/*/*/*/*.json
+/test/data/MockEventRoot/*/*/*/*/*.json
