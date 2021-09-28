@@ -17,7 +17,7 @@ class EventType
     public static function fromString(string $eventType):EventType
     {
         $components = explode('/', $eventType);
-        return new self($components);
+        return new self(...$components);
     }
     public function asArray():array
     {
