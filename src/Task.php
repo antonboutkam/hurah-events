@@ -17,6 +17,10 @@ class Task
         $this->path = $path;
         $this->context = Context::fromPath($this->path);
     }
+    public function getPath():Path
+    {
+        return $this->path;
+    }
     public function getContext():Context
     {
         return $this->context;
