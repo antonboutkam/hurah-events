@@ -1,12 +1,12 @@
+# Hurah events
+Simple file based task delegation system.
+
 > :warning: **No locking**: This package is intended as a simple
 solution for task delegation in situations where scaling won't be an issue. It
 assumes each handler for a specific task runs only once. Running multiple
 instances of the same handler concurrently may result in tasks being executed
 multiple times.
 
-
-# Hurah events
-Simple file based task delegation system.
 
 ## Use cases
 - Make generic software extensible.
