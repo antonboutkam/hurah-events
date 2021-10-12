@@ -4,6 +4,7 @@ namespace Hurah\Event;
 
 use Hurah\Event\Helper\HandlerName;
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Exception\RuntimeException;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Type\PathCollection;
 use Hurah\Types\Type\Regex;
@@ -39,6 +40,7 @@ abstract class AbstractHandler implements HandlerInterface
 
     /**
      * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     public function handle(): void
     {
@@ -57,6 +59,10 @@ abstract class AbstractHandler implements HandlerInterface
             elseif($iTaskStatus === Task::RETRY)
             {
                 $oTask->retry($this->maxAttempts());
+            }
+            elseif ($iTaskStatus === Task::FAILURE)
+            {
+                throw new RuntimeException("Processing {$oTask->getPath()} resulted in a failure.");
             }
         }
     }
