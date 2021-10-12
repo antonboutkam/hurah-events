@@ -7,8 +7,6 @@ assumes each handler for a specific task runs only once. Running multiple
 instances of the same handler concurrently may result in tasks being executed
 multiple times.
 
-#
-
 ## Use cases
 - Make generic software extensible.
 - Move time consuming work to a separate background process.
