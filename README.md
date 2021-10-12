@@ -1,5 +1,5 @@
 # Hurah events
-Simple file based task delegation system.
+A simple file based task delegation system.
 
 > :warning: **No locking**: This package is intended as a simple
 solution for task delegation in situations where scaling won't be an issue. It
