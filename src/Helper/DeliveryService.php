@@ -30,19 +30,19 @@ class DeliveryService
     }
 
     /**
-     * @param Context $data
+     * @param Context $oContext
      *
      * @throws InvalidArgumentException
      */
-    public function writeToInbox(Context $data)
+    public function writeToInbox(Context $oContext)
     {
         $iNextId = $this->nextSequence();
-        $data->setSequence($iNextId);
-        $data->setDelivery($this->getTimestamp());
-        $data->setCount($this->count);
+        $oContext->setSequence($iNextId);
+        $oContext->setDelivery($this->getTimestamp());
+        $oContext->setCount($this->count);
 
         $jsonFile = $this->listenerDirectoryPath->makeDir()->extend("inbox", "$iNextId.json");
-        $jsonFile->write($data->toJson());
+        $jsonFile->write($oContext->toJson());
         $this->persistTracking();
     }
 

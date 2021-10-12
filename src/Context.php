@@ -20,9 +20,12 @@ class Context
     public static function fromPath(Path $path):Context
     {
         $data = $path->contents()->toJson()->toArray();
-        $context = new self($data['payload']);
-        $context->data = $data;
-        return $context;
+        $object = new self($data['payload']);
+        $object->setSequence($data['sequence']);
+        $object->setCount($data['count']);
+        $object->setDelivery($data['delivery']);
+        $object->data = $data;
+        return $object;
     }
 
     public function getPayload()
@@ -37,6 +40,7 @@ class Context
 
         return JsonUtils::encode($this->data);
     }
+
     public function getSequence():int
     {
         return $this->sequence;
@@ -45,6 +49,7 @@ class Context
     {
         $this->sequence = $sequence;
     }
+
     public function setCount(int $count)
     {
         $this->count = $count;
