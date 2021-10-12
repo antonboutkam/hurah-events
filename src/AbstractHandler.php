@@ -36,7 +36,35 @@ abstract class AbstractHandler implements HandlerInterface
     }
 
     abstract public function getLogger():LoggerInterface;
-    abstract public function handle(): void;
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function handle(): void
+    {
+        foreach($this->getQueue() as $oTask)
+        {
+            $this->getLogger()->debug("Processing {$oTask->getPath()}");
+            $iTaskStatus = $this->handleTask($oTask->getContext());
+            if($iTaskStatus == Task::SUCCESS)
+            {
+                $oTask->finish();
+            }
+            elseif($iTaskStatus === Task::INVALID)
+            {
+                $oTask->error("Task was invalid");
+            }
+            elseif($iTaskStatus === Task::RETRY)
+            {
+                $oTask->retry($this->maxAttempts());
+            }
+        }
+    }
+    abstract protected function handleTask(Context $context):int;
+    protected function maxAttempts():int
+    {
+        return 0;
+    }
 
     public function getType(): EventType
     {
