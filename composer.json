@@ -8,9 +8,6 @@
             "email": "anton@nui-boutkam.nl"
         }
     ],
-    "scripts" : {
-        "event-creator" : "bin/application.php"
-    },
     "type": "library",
 
     "minimum-stability": "dev",
@@ -18,7 +15,7 @@
         "php" : "^7.4",
         "ext-json": "^7.4",
         "hurah/data-types": "^v1",
-        "symfony/console": "5.4.x-dev"
+        "symfony/console": "^5.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.3@dev"
