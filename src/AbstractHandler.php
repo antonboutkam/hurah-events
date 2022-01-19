@@ -68,7 +68,7 @@ abstract class AbstractHandler implements HandlerInterface
         {
             try
             {
-                $this->getLogger()->debug("Processing {$oTask->getPath()}");
+                $this->getLogger()->info("Processing {$oTask->getPath()}");
                 $iTaskStatus = $this->handleTask($oTask->getContext());
                 if($iTaskStatus == Task::SUCCESS)
                 {

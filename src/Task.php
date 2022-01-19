@@ -34,6 +34,7 @@ class Task
     {
         $aData = $this->path->contents()->toJson()->toArray();
         $retryCount =  isset($aData['retry_count']) ? $aData['retry_count'] + 1 : 1;
+        $this->logger->info("Retry {$this->path} attempt $retryCount of $iMaxRetryCount");
         if($retryCount > $iMaxRetryCount)
         {
             $this->error("Hit retry limit which is set to: $iMaxRetryCount.");
@@ -55,7 +56,7 @@ class Task
     public function finish(): void
     {
         $archiveDir = $this->path->dirname(2)->extend('archive')->makeDir();
-        $this->logger->debug("Moving {$this->path->basename()} to {$archiveDir}");
+        $this->logger->info("Moving {$this->path->basename()} to {$archiveDir}");
         $this->path->move($archiveDir);
     }
 
@@ -63,8 +64,8 @@ class Task
     {
         $errorDir = $this->path->dirname(2)->extend('error')->makeDir();
         $this->logger->warning("Event job " . $this->context->getSequence() . "could not be processed");
-        $this->logger->info($sReason);
-        $this->logger->info("Moving {$this->path->basename()} to {$errorDir}");
+        $this->logger->warning($sReason);
+        $this->logger->warning("Moving {$this->path->basename()} to {$errorDir}");
 
         $this->path->move($errorDir);
     }
