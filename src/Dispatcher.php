@@ -26,7 +26,6 @@ class Dispatcher
     }
     private function deliver(Path $oHandlerDirectory, Context $data)
     {
-        var_dump($oHandlerDirectory);
         $oEndpoint = new DeliveryService($oHandlerDirectory);
         $oEndpoint->writeToInbox($data);
     }

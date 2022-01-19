@@ -55,8 +55,6 @@ abstract class AbstractHandler implements HandlerInterface
 
     private function logConsole(string $sMessage):void
     {
-        $output = new ConsoleOutput();
-        $output->writeln("<error>$sMessage</error>");
         $this->getLogger()->warning($sMessage);
     }
 
@@ -66,7 +64,6 @@ abstract class AbstractHandler implements HandlerInterface
      */
     public function handle(): void
     {
-        $output = new ConsoleOutput();
         foreach($this->getQueue() as $oTask)
         {
             try
