@@ -91,6 +91,7 @@ abstract class AbstractHandler implements HandlerInterface
                     {
                         $this->logConsole("{$i}.) {$sLine}");
                     }
+                    $oTask->error("Task failed");
                 }
             }
             catch (Exception $e)
@@ -102,6 +103,7 @@ abstract class AbstractHandler implements HandlerInterface
                 {
                     $this->logConsole(json_encode($item));
                 }
+                $oTask->error($e->getMessage());
             }
 
         }
