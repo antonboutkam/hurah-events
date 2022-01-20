@@ -80,6 +80,7 @@ abstract class AbstractHandler implements HandlerInterface
                 }
                 elseif($iTaskStatus === Task::RETRY)
                 {
+                    $this->logConsole("Retry job {$this->maxAttempts()}");
                     $oTask->retry($this->maxAttempts());
                 }
                 elseif ($iTaskStatus === Task::FAILURE)
