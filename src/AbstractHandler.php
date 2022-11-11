@@ -64,6 +64,8 @@ abstract class AbstractHandler implements HandlerInterface
      */
     public function handle(): void
     {
+        $oQueue = $this->getQueue();
+        $this->getLogger()->info("Queue has " . $oQueue->le . " items waiting for procesing");
         foreach($this->getQueue() as $oTask)
         {
             try
@@ -94,6 +96,7 @@ abstract class AbstractHandler implements HandlerInterface
                     }
                     $oTask->error("Task failed");
                 }
+                $this->getLogger()->info("Task finished, moving to the next");
             }
             catch (Exception $e)
             {
@@ -106,6 +109,7 @@ abstract class AbstractHandler implements HandlerInterface
                 }
                 $oTask->error($e->getMessage());
             }
+            $this->getLogger()->info("Queue empty, we are done for now");
 
         }
     }
