@@ -65,7 +65,7 @@ abstract class AbstractHandler implements HandlerInterface
     public function handle(): void
     {
         $oQueue = $this->getQueue();
-        $this->getLogger()->info("Queue has " . $oQueue->le . " items waiting for procesing");
+        $this->getLogger()->info("Queue has " . $oQueue->length() . " items waiting for processing");
         foreach($this->getQueue() as $oTask)
         {
             try
