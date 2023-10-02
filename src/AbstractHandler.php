@@ -113,7 +113,7 @@ abstract class AbstractHandler implements HandlerInterface
 
         }
     }
-    abstract protected function handleTask(AbstractContext $oContext):int;
+    abstract protected function handleTask($oContext):int;
     protected function maxAttempts():int
     {
         return 0;
