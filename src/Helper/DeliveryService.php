@@ -4,7 +4,7 @@ namespace Hurah\Event\Helper;
 
 
 use DateTime;
-use Hurah\Event\Context;
+use Hurah\Event\ContextInterface;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\Json;
 use Hurah\Types\Type\Path;
@@ -30,18 +30,18 @@ class DeliveryService
     }
 
     /**
-     * @param Context $data
+     * @param ContextInterface $data
      *
      * @throws InvalidArgumentException
      */
-    public function writeToInbox(Context $data)
+    public function writeToInbox(ContextInterface $data)
     {
         $iNextId = $this->nextSequence();
         $data->setSequence($iNextId);
         $data->setDelivery($this->getTimestamp());
         $data->setCount($this->count);
 
-        $jsonFile = $this->listenerDirectoryPath->makeDir()->extend("inbox", "$iNextId.json");
+        $jsonFile = $this->listenerDirectoryPath->extend('inbox')->makeDir()->extend("$iNextId.json");
         $jsonFile->write($data->toJson());
         $this->persistTracking();
     }

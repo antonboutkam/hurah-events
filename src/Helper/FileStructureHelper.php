@@ -4,6 +4,7 @@ namespace Hurah\Event\Helper;
 
 use Hurah\Event\EventType;
 use Hurah\Types\Exception\InvalidArgumentException;
+use Hurah\Types\Exception\NullPointerException;
 use Hurah\Types\Type\DirectoryIterator;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Type\PathCollection;
@@ -25,6 +26,8 @@ class FileStructureHelper
      * @param EventType $eventType
      *
      * @return PathCollection
+     * @throws NullPointerException
+     * @throws InvalidArgumentException
      */
     public function getDeliveryPoints(EventType $eventType): PathCollection
     {
@@ -32,11 +35,19 @@ class FileStructureHelper
         $oPathCollection->add(Path::make($this->eventRoot, $eventType->asArray()));
         while (!$eventType->isVoid())
         {
-            $oPathCollection->add(Path::make($this->eventRoot, $eventType->pop()->asArray()));
+            $aEventTypeArray = $eventType->pop()->asArray();
+            echo join('>>', $aEventTypeArray) . PHP_EOL;
+            $oPathCollection->add(Path::make($this->eventRoot, $aEventTypeArray));
         }
         return $oPathCollection;
     }
 
+    /**
+     * Return a list of event listeners for a certain event type.
+     * @param EventType $eventType
+     * @return PathCollection
+     * @throws InvalidArgumentException
+     */
     public function findEventListeners(EventType $eventType):PathCollection
     {
         $oPathCollection = new PathCollection();
@@ -57,7 +68,8 @@ class FileStructureHelper
     {
         $oDirectoryIterator = $oPath->getDirectoryIterator();
         $oSubFoldersPathCollection = $oDirectoryIterator->toPathCollection(DirectoryIterator::DIR_ONLY);
-        return $oSubFoldersPathCollection->filter(new Regex('/_listener$/'));
+        $oResult =  $oSubFoldersPathCollection->filter(new Regex('/_listener$/'));
+        return $oResult;
     }
 
 

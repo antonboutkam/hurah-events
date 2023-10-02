@@ -4,6 +4,7 @@ namespace Hurah\Event;
 
 use Hurah\Event\Helper\DeliveryService;
 use Hurah\Event\Helper\FileStructureHelper;
+use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\Path;
 use function var_dump;
 
@@ -15,7 +16,10 @@ class Dispatcher
         $this->eventRoot = new Path($eventRoot);
     }
 
-    public function dispatch(EventType $eventType, Context $data)
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function dispatch(EventType $eventType, ContextInterface $data)
     {
         $fileStructureHelper = new FileStructureHelper($this->eventRoot);
 
@@ -24,7 +28,11 @@ class Dispatcher
             $this->deliver($listenedDirectoryPath, $data);
         }
     }
-    private function deliver(Path $oHandlerDirectory, Context $data)
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    private function deliver(Path $oHandlerDirectory, ContextInterface $data)
     {
         $oEndpoint = new DeliveryService($oHandlerDirectory);
         $oEndpoint->writeToInbox($data);

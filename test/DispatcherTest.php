@@ -13,24 +13,41 @@ use Hurah\Types\Type\Regex;
 
 class DispatcherTest extends BaseTestCase
 {
+    /**
+     * Test of het afvuren van events werkt
+     * @return void
+     * @throws InvalidArgumentException
+     */
     public function testDispatch()
     {
         $productRoot = $this->eventRoot->extend('product');
 
-        $oDestinations = PathCollection::fromPaths(
+        /**
+         * First we register a bunch of listener locations.
+         */
+        $oEventTargetLocations = PathCollection::fromPaths(
             $productRoot->extend('price_calculator_listener', 'inbox')->makeDir(),
             $productRoot->extend('stored', 'image_scaler_listener', 'inbox')->makeDir(),
             $productRoot->extend('stored', 'translation_listener', 'inbox')->makeDir()
         );
 
-        $aPreEventJsonFiles = $this->countJsonFilesInFolders($oDestinations);
+        /**
+         * Check what files are already there.
+         */
+        $aPreEventJsonFiles = $this->countJsonFilesInFolders($oEventTargetLocations);
 
+        /**
+         * Fire a product stored event, this event should recurse up to product.
+         */
         $oEventType = new EventType('product', 'stored');
         $oContext = new Context(['product_id' => 1, 'created_by' => __CLASS__]);
         $oDispatcher = new Dispatcher($this->eventRoot);
         $oDispatcher->dispatch($oEventType, $oContext);
 
-        $aAfterEventJsonFiles = $this->countJsonFilesInFolders($oDestinations);
+        /**
+         * Check what files are now there.
+         */
+        $aAfterEventJsonFiles = $this->countJsonFilesInFolders($oEventTargetLocations);
 
         foreach($aPreEventJsonFiles as $iIndex => $iCount)
         {

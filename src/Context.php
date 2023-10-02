@@ -6,7 +6,7 @@ use Hurah\Types\Type\Json;
 use Hurah\Types\Type\Path;
 use Hurah\Types\Util\JsonUtils;
 
-class Context
+class Context implements ContextInterface
 {
     private array $data;
     private int $sequence;
@@ -17,7 +17,7 @@ class Context
     {
         $this->data = ['payload' => $data];
     }
-    public static function fromPath(Path $path):Context
+    public static function fromPath(Path $path):ContextInterface
     {
         $data = $path->contents()->toJson()->toArray();
         $object = new self($data['payload']);
