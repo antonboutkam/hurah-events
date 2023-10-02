@@ -15,7 +15,7 @@ class Task
     public const INVALID = 3;
 
     private Path $path;
-    private Context $context;
+    private ContextInterface $context;
     private LoggerInterface $logger;
 
     public function __construct(Path $path, LoggerInterface $logger)
@@ -48,7 +48,7 @@ class Task
         return $this->path;
     }
 
-    public function getContext(): Context
+    public function getContext(): ContextInterface
     {
         return $this->context;
     }
