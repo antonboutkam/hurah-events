@@ -10,6 +10,10 @@ class HandlerName
 {
     const EVENT_NAME_CONSTRAINT = '/[a-zA-Z0-9]+/';
     private PlainText $oHandlerName;
+
+    /**
+     * @throws InvalidArgumentException
+     */
     public function __construct(string $sName)
     {
         $oHandlerName = new PlainText($sName);

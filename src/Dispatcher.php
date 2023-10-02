@@ -6,7 +6,7 @@ use Hurah\Event\Helper\DeliveryService;
 use Hurah\Event\Helper\FileStructureHelper;
 use Hurah\Types\Exception\InvalidArgumentException;
 use Hurah\Types\Type\Path;
-use function var_dump;
+
 
 class Dispatcher
 {
@@ -19,7 +19,7 @@ class Dispatcher
     /**
      * @throws InvalidArgumentException
      */
-    public function dispatch(EventType $eventType, ContextInterface $data)
+    public function dispatch(EventType $eventType, AbstractContext $data)
     {
         $fileStructureHelper = new FileStructureHelper($this->eventRoot);
 
@@ -32,7 +32,7 @@ class Dispatcher
     /**
      * @throws InvalidArgumentException
      */
-    private function deliver(Path $oHandlerDirectory, ContextInterface $data)
+    private function deliver(Path $oHandlerDirectory, AbstractContext $data)
     {
         $oEndpoint = new DeliveryService($oHandlerDirectory);
         $oEndpoint->writeToInbox($data);
