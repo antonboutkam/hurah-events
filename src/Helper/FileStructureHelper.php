@@ -36,7 +36,6 @@ class FileStructureHelper
         while (!$eventType->isVoid())
         {
             $aEventTypeArray = $eventType->pop()->asArray();
-            echo join('>>', $aEventTypeArray) . PHP_EOL;
             $oPathCollection->add(Path::make($this->eventRoot, $aEventTypeArray));
         }
         return $oPathCollection;
