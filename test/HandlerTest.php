@@ -9,8 +9,8 @@ use Hurah\Event\EventType;
 use Hurah\Event\Helper\HandlerName;
 use Hurah\Event\Task;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Test\Hurah\Event\Helper\FakeLogger;
+use Hurah\Event\ContextInterface;
 
 class HandlerTest extends BaseTestCase
 {
@@ -42,7 +42,7 @@ class HandlerTest extends BaseTestCase
                 return new FakeLogger();
             }
 
-            protected function handleTask(Context $oContext): int
+            protected function handleTask(ContextInterface $oContext): int
             {
                 return Task::SUCCESS;
             }
