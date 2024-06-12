@@ -119,3 +119,4 @@ inotifywait -m "$DIRECTORY" -e create |
 
 echo "Listener stopped"
 ```
+[![antonboutkam](https://circleci.com/gh/antonboutkam/hurah-events.svg?style=svg)](https://antonboutkam.nl)
